@@ -1,5 +1,6 @@
 # Report Writing Application
 
+Experimentation with huggingface models and node.js.
 This project is a web-based application designed for report writing, integrating AI functionalities to enhance the writing experience. It utilizes Hugging Face models to provide suggestions and corrections similar to Grammarly.
 
 ## Features
