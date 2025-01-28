@@ -21,3 +21,16 @@ export const analyzeText = async (text: string) => {
         throw error;
     }
 };
+
+const fetchSuggestions = async (inputText: string): Promise<string[]> => {
+    try {
+        const response = await axios.post('/api/suggestions', { text: inputText });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching suggestions:', error);
+        throw error;
+    }
+};
+
+export default fetchSuggestions;
+

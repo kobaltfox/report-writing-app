@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import { fetchSuggestions } from '../services/huggingFaceAPI';
+import fetchSuggestions from '../services/huggingFaceAPI';
 
-const useAIModel = (inputText) => {
-    const [suggestions, setSuggestions] = useState([]);
+const useAIModel = (inputText: string) => {
+    const [suggestions, setSuggestions] = useState<string[]>([]);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<Error | null>(null);
 
     useEffect(() => {
         if (inputText) {
@@ -14,12 +14,10 @@ const useAIModel = (inputText) => {
                     setSuggestions(data);
                     setLoading(false);
                 })
-                .catch((err) => {
-                    setError(err);
+                .catch((error) => {
+                    setError(error);
                     setLoading(false);
                 });
-        } else {
-            setSuggestions([]);
         }
     }, [inputText]);
 

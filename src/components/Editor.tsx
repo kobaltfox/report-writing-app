@@ -1,27 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { useAIModel } from '../hooks/useAIModel';
+import useAIModel from '../hooks/useAIModel';
+
 
 const Editor: React.FC = () => {
     const [text, setText] = useState('');
     const [suggestions, setSuggestions] = useState<string[]>([]);
-    const { fetchSuggestions } = useAIModel();
+    const { suggestions: newSuggestions, loading, error } = useAIModel(text);
+
+    useEffect(() => {
+        const fetch = async () => {
+            if (!loading && !error) {
+                setSuggestions(newSuggestions);
+            }
+        };
+        fetch();
+    }, [text, newSuggestions, loading, error]);
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setText(event.target.value);
     };
-
-    useEffect(() => {
-        const fetch = async () => {
-            const newSuggestions = await fetchSuggestions(text);
-            setSuggestions(newSuggestions);
-        };
-
-        if (text) {
-            fetch();
-        } else {
-            setSuggestions([]);
-        }
-    }, [text, fetchSuggestions]);
 
     return (
         <div className="editor">
